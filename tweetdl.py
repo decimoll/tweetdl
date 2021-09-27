@@ -203,6 +203,7 @@ if args.favorites:
     
 if args.normal:
     retweeted_statuses = fetch_retweets(api)
+    retweeted_statuses.reverse()
     for r in retweeted_statuses:
         a = download(api, r)
         #print(a)
