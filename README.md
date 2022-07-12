@@ -2,4 +2,4 @@
 Download not only photos but also text tweets.
 
 ## License
-[WTFPL](LICENSE)
+[MIT License](LICENSE)
