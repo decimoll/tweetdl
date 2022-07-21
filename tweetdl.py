@@ -38,7 +38,8 @@ def limit_handled(cursor):
     while True:
         try:
             yield cursor.next()
-        except tweepy.error.TweepError:
+        except tweepy.TweepyException as e:
+            print(e)
             if limit_handled_count < 3:
                 print('Twitter rate limit 15 minutes wait...')
                 limit_handled_count += 1
@@ -54,7 +55,7 @@ def limit_handled(cursor):
 def fetch_favs(api):
     favs_statuses = []
     print('start fetching favs')
-    for status in limit_handled(tweepy.Cursor(api.favorites, id=USER_ID, tweet_mode='extended').items()):
+    for status in limit_handled(tweepy.Cursor(api.favorites, screen_name=USER_ID, tweet_mode='extended').items()):
         json_result = status._json
         print(json_result['full_text'])
         favs_statuses.append(json_result)
@@ -64,7 +65,7 @@ def fetch_favs(api):
 def fetch_retweets(api):
     retweeted_statuses = []
     print('start fetching retweets')
-    for status in limit_handled(tweepy.Cursor(api.user_timeline, id=USER_ID, tweet_mode='extended').items()):
+    for status in limit_handled(tweepy.Cursor(api.user_timeline, screen_name=USER_ID, tweet_mode='extended').items()):
         json_result = status._json
         if 'retweeted_status' in json_result:
             print(json_result['retweeted_status']['full_text'])
