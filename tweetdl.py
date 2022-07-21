@@ -7,6 +7,7 @@ import os
 import pprint
 import urllib.error
 import urllib.request
+import emoji
 
 os.getcwd()
 with open(os.path.dirname(os.path.abspath(__file__)) + '/conf.json', 'r') as j:
@@ -24,7 +25,7 @@ FIFTEEN_MINUTES = 20 * 60
 # 禁則文字の処理
 def replace_prohibited_chars(s):
     pc = [['/', '／'], [':', '：'], ['.', '．'], ['*', '＊'], ['<', '＜'], ['>', '＞'], ['|', '｜'], ['?', '？'], ['\"', '”'], ['\0', ''], ['\n', ' ']]
-    r = s
+    r = emoji.demojize(s)
     for c in pc:
         r = r.replace(c[0], c[1])
     return r
